@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   <title>Gestion des salariés</title>
@@ -17,10 +17,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li><a href="http://localhost:8080/salariés?page=0&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC" class="nav-link">Liste des salariés <span class="badge badge-primary"></span></a></li>
+        <li><a href="http://localhost:8080/salaries" class="nav-link">Liste des salariés <span class="badge badge-primary"></span></a></li>
       </ul>
 
-      <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/salariés" method="GET">
+      <form class="form-inline my-2 my-lg-0" role="search" th:action="@{http://localhost:8080/salaries/recherche}" method="GET">
         <div class="form-group">
           <input name="nom" class="form-control" placeholder="Rechercher un nom" type="text">
         </div>
@@ -47,15 +47,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Jeanne Dupond</td>
-          <td><a href="/salaries/aide/2" class="btn btn-primary ember-view">Détail</a></td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Robert Martin</td>
-          <td><a href="/salaries/aide/3" class="btn btn-primary ember-view">Détail</a></td>
+        <tr th:each="listSalarie : ${listSalaries}">
+          <th scope="row" th:text="${listSalarie.getId()}"></th>
+          <td th:text="${listSalarie.getNom()}"></td>
+          <td><a th:href="@{/salaries/{id}(id=${listSalarie.getId()})}" class="btn btn-primary ember-view">Détail</a></td>
         </tr>
         </tbody>
       </table>
